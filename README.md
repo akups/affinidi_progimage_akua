@@ -1,4 +1,21 @@
-# affinidi_progimage_akua
+# Affinidi_ProgImage.com
+
+Intro:
+
+ProgImage.com is a programmatic image storage and processing service.
+
+ProgImage is designed as a specialised image storage and processing engine to be used by other applications, and will (only) provide high-performance access via its API.
+
+Apart from bulk image storage and retrieval, ProgImage provides several image processing and transformation capabilities such as compression, rotation, a variety of filters, thumbnail creation, and masking.
+
+These capabilities are all delivered as a set of high-performance web-services that can operate on images provided as data in a request, operate on a remote image via a URL, or on images that are already in the repository. All of the processing features should be able to operate in bulk, and at a significant scale.
+
+Core Technical Concepts/Inspiration
+
+- With proimage develpers can focus on their core sites and implenet all image process needed with the proImage solution
+- Unlike other image storage services that have a web front-end and target end-users, ProgImage is designed as a specialised image storage and processing engine to be used by other applications, and will (only) provide high-performance access via its API.
+- ProImage uses Busyboy and sharp as the main image processing tools and saves the data in Mongo Atlas whilst creating an S3 bucket that stores the images as well as creates unique urlls for easy retrieval by users
+- Keep it useful.
 
 1. I first manually created my S3 bucket on the AWS console
 2. https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#upload-property
@@ -14,6 +31,7 @@
 - Busboy - for processing the image into a buffer that'll be then sent to S3
 - uuid - that insures that each created image will have a unique id with which it can be queried
 - sharp - for transformation of images into different formats
+- sharp can do further perfomances on the images for the prupose of the assignment not every example is shown.
 
 Bus boy recieves the file from the folder on the computer and processes it into a buffer that is passed on to the S3 bucket where a url for it is created. After this process the images are stored in the mongo database collection with all the parameters specified in the schema. With the aide of postman:
 
