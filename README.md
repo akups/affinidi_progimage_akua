@@ -12,12 +12,11 @@ These capabilities are all delivered as a set of high-performance web-services t
 
 Core Technical Concepts/Inspiration
 
-- With proimage develpers can focus on their core sites and implenet all image process needed with the proImage solution
+- With proimage developers can focus on their core sites and implement all image process needed with the proImage solution
 - Unlike other image storage services that have a web front-end and target end-users, ProgImage is designed as a specialised image storage and processing engine to be used by other applications, and will (only) provide high-performance access via its API.
 - ProImage uses Busyboy and sharp as the main image processing tools and saves the data in Mongo Atlas whilst creating an S3 bucket that stores the images as well as creates unique urlls for easy retrieval by users
-- Keep it useful.
 
-1. I first manually created my S3 bucket on the AWS console
+1. First an S3 bucket was manually created on the AWS console
 2. https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#upload-property
    using the informtion on this link I set my parameters for my S3 bucket I created a .env file to hide all keys and passwords in a secure place
 3. In order to use process.env to access the keys in the .env file dotenv is installed and required in the creation
