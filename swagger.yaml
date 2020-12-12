@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
   title: Image Processing API
-  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
+  description: Proimage image proceessing creation, retieaval and formatting of images [CommonMark](http://commonmark.org/help/) or HTML.
   version: 0.1.9
 servers:
-  - url: http://api.example.com/v1
+  - url: https://proimage-akups.herokuapp.com/api-docs/
     description: Optional server description, e.g. Main (production) server
 paths:
   /image:
@@ -36,7 +36,6 @@ paths:
                   name:
                     type: string
                     example: tweety.jpg
-
 paths:
   /image/:imageId:
     get:
