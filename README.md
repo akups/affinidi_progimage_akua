@@ -56,3 +56,4 @@ Image Processing:
   the new url is sent to the client
 
   Testing:
+  The development dependencies jest and super test were employed for testing purposes:
