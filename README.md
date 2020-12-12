@@ -26,6 +26,8 @@ Core Technical Concepts/Inspiration
 5. Creation of database - a mongo database is created to store the images for retrieval and processing
 6. the app creation process requires other dependencies
 
+Dependencies:
+
 - express - facilitating rapid development of our app
 - Busboy - for processing the image into a buffer that'll be then sent to S3
 - uuid - that insures that each created image will have a unique id with which it can be queried
@@ -33,6 +35,9 @@ Core Technical Concepts/Inspiration
 - sharp can do further perfomances on the images for the prupose of the assignment not every example is shown.
 
 Bus boy recieves the file from the folder on the computer and processes it into a buffer that is passed on to the S3 bucket where a url for it is created. After this process the images are stored in the mongo database collection with all the parameters specified in the schema. With the aide of postman:
+Swimlanes diagrams are used to describe the various processes.
+
+Image Processing:
 
 - first endpoint for creation/saving of the images
   https://swimlanes.io/u/s8o1iJCJL
@@ -49,3 +54,5 @@ Bus boy recieves the file from the folder on the computer and processes it into 
   the new imageFile is sent to the S3 bucket
   S3 returns to the server a new url corrseponding to the formatted version of the image
   the new url is sent to the client
+
+  Testing:
