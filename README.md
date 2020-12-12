@@ -37,10 +37,10 @@ Dependencies:
 Bus boy recieves the file from the folder on the computer and processes it into a buffer that is passed on to the S3 bucket where a url for it is created. After this process the images are stored in the mongo database collection with all the parameters specified in the schema. With the aide of postman:
 Swimlanes diagrams are used to describe the various processes.
 
-Image Processing:
+### Image Processing REST Api:
 
-- first endpoint for creation/saving of the images
-  https://swimlanes.io/u/s8o1iJCJL
+##### Creation/saving of the images:
+- POST `/image` --> [Sequence Diagram](https://swimlanes.io/u/s8o1iJCJL)
   the client in my case postman sends a post request in order to create the image. The file is selected from the folder and through Busboy is transformed into a buffer which is sent to the S3 bucket and subsequently a unique url will be created
 
 - second endpoint to retrieve an image with the unique id
@@ -50,7 +50,7 @@ Image Processing:
 - third endpoint to format a specific image and retrieve the formatted version
   https://swimlanes.io/u/ffv0s5TEa
   the client sends a GET request to the server with a specific imageID and a required format that should be returned
-  the imagerecord in the mogo database matching this id is retireved and by the help of sharp tranformed to what was requested
+  the imagerecord in the mongo database matching this id is retrieved and by the help of sharp transformed to what was requested
   the new imageFile is sent to the S3 bucket
   S3 returns to the server a new url corrseponding to the formatted version of the image
   the new url is sent to the client

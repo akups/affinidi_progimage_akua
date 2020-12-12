@@ -4,15 +4,31 @@ const express = require("express");
 const sharp = require("sharp");
 const { v4 } = require("uuid");
 const Busboy = require("busboy");
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
 
 const Image = require("./models/Image");
 const { createDatabase } = require("./db/index");
-const { uploadFile, s3, Bucket } = require("./util/fileStorage.js");
+const swaggerDocument = YAML.load("./swagger.yaml");
+const AWS = require("aws-sdk");
+
+AWS.config.region = "eu-central-1";
+const ID = process.env.AWS_AccessKeyID;
+const SECRET = process.env.AWS_SecretAccessKey;
+const Bucket = process.env.S3_BUCKET_NAME;
+
+const s3 = new AWS.S3({
+  accessKeyId: ID,
+  secretAccessKey: SECRET,
+});
 
 async function createApp() {
   await createDatabase();
 
   const app = express();
+
+  // api docs endpoint
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
   // create images
   app.post("/image", (req, res) => {
@@ -28,14 +44,29 @@ async function createApp() {
       async function (fieldname, file, filename, encoding, mimetype) {
         imgRecord.name = filename;
 
-        // save
-        await imgRecord.save();
+        const s3Key = imgRecord.id + "_" + filename;
+        const params = {
+          ACL: "public-read",
+          Bucket, // TODO: Put backticks
+          Key: s3Key, // the name you want the file to have in your S3 bucket
+          Body: file,
+        };
 
-        await uploadFile(filename, file, imgRecord);
+        // uploading your file to the S3 bucket
+        s3.upload(params, async function (err, data) {
+          if (err) {
+            throw err;
+            res.status(500);
+          }
+          imgRecord.url = data.Location;
+          imgRecord.s3Key = s3Key;
+          await imgRecord.save();
+
+          res.json(imgRecord);
+        });
         // 3. Add endpoint to retrieve image
         // 3. What is http multipart data
         // 4. Buffer and Streams in Node.js
-        res.json(imgRecord);
       }
     );
     busboy.on("finish", function () {});
@@ -72,7 +103,7 @@ async function createApp() {
       format !== "webP" &&
       format !== "tiff"
     ) {
-      res.status(500);
+      res.status(400);
       res.send(`Format must be one of the following: png, jpeg, webP, tiff`);
     }
     // retrieve image

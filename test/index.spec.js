@@ -31,3 +31,33 @@ describe("Image Api", () => {
       });
   });
 });
+
+// describe("Image Api", () => {
+//   it("Can retrieve an image", function (done) {
+//     request(app)
+//       .get("/image/:imageId")
+//       .set("Accept", "application/json")
+//       .attach("image", testImage, { contentType: "form/multipart" })
+//       .expect(200)
+//       .end(function (err, res) {
+//         if (err) return done(err);
+//         console.log(res.body);
+//         done();
+//       });
+//   });
+// });
+
+// describe("Image Api", () => {
+//   it("Can retrieve an image", function (done) {
+//     request(app)
+//       .get("/image/:format/:imageId")
+//       .set("Accept", "application/json")
+//       .attach("image", testImage, { contentType: "form/multipart" })
+//       .expect(200)
+//       .end(function (err, res) {
+//         if (err) return done(err);
+//         console.log(res.body);
+//         done();
+//       });
+//   });
+// });
