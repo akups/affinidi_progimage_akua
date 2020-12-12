@@ -35,7 +35,7 @@ Dependencies:
 - sharp can do further perfomances on the images for the prupose of the assignment not every example is shown.
 
 Bus boy recieves the file from the folder on the computer and processes it into a buffer that is passed on to the S3 bucket where a url for it is created. After this process the images are stored in the mongo database collection with all the parameters specified in the schema. With the aide of postman:
-Swimlanes diagrams are used to describe the various processes.
+Swimlanes is used for sequence diagrams describing the various processes.
 
 ### Image Processing REST Api:
 
@@ -43,17 +43,20 @@ Swimlanes diagrams are used to describe the various processes.
 - POST `/image` --> [Sequence Diagram](https://swimlanes.io/u/s8o1iJCJL)
   the client in my case postman sends a post request in order to create the image. The file is selected from the folder and through Busboy is transformed into a buffer which is sent to the S3 bucket and subsequently a unique url will be created
 
-- second endpoint to retrieve an image with the unique id
-  https://swimlanes.io/u/NpTH_fqB7
-  the client send a GET request to the server with a specific id to retireve the image that is saved in our mongo database that corresponds to this particular id. the server sends the url pf this image back to the client
 
-- third endpoint to format a specific image and retrieve the formatted version
-  https://swimlanes.io/u/ffv0s5TEa
+##### Retrieving of the images by id:
+- GET `/image/:imageId` --> [Sequence Diagram](  https://swimlanes.io/u/NpTH_fqB7
+)
+  the client sends a GET request to the server with a specific id to retrieve the image that is saved in our mongo database that corresponds to this particular id. The server sends the url of this image back to the client
+
+
+##### Processing of the images:
+- GET `/image/:format/:imageId` --> [Sequence Diagram](    https://swimlanes.io/u/ffv0s5TEa)
   the client sends a GET request to the server with a specific imageID and a required format that should be returned
   the imagerecord in the mongo database matching this id is retrieved and by the help of sharp transformed to what was requested
   the new imageFile is sent to the S3 bucket
   S3 returns to the server a new url corrseponding to the formatted version of the image
   the new url is sent to the client
 
-  Testing:
-  The development dependencies jest and super test were employed for testing purposes:
+##### Testing:
+  The development dependency super test was employed for testing purposes:
