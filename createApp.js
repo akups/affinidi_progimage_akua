@@ -135,7 +135,7 @@ async function createApp() {
         }
       );
     } else {
-      res.status(500);
+      res.status(404);
       res.send(`Image not found in database`);
     }
   });
