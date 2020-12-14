@@ -110,26 +110,34 @@ async function createApp() {
       res.send(`Format must be one of the following: png, jpeg, webP, tiff`);
     }
     // retrieve image
+
     const imgRecord = await Image.findOne({ id: imageId }).exec();
 
     // apply transform
-    s3.getObject(
-      {
-        Bucket,
-        Key: imgRecord.s3Key,
-      },
-      async function (err, data) {
-        if (err) {
-          console.log(err, err.stack);
-          res.status(500);
-          res.send(`Error in image retrieval`);
-        } else {
-          const imgBuffer = data.Body;
-          const pngBuffer = await sharp(imgBuffer).toFormat(format).toBuffer();
-          res.end(pngBuffer);
+    if (imgRecord) {
+      s3.getObject(
+        {
+          Bucket,
+          Key: imgRecord.s3Key,
+        },
+        async function (err, data) {
+          if (err) {
+            console.log(err, err.stack);
+            res.status(500);
+            res.send(`Error in image retrieval`);
+          } else {
+            const imgBuffer = data.Body;
+            const pngBuffer = await sharp(imgBuffer)
+              .toFormat(format)
+              .toBuffer();
+            res.end(pngBuffer);
+          }
         }
-      }
-    );
+      );
+    } else {
+      res.status(500);
+      res.send(`Image not found in database`);
+    }
   });
 
   return app;
