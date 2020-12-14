@@ -6,6 +6,7 @@ const { v4 } = require("uuid");
 const Busboy = require("busboy");
 const swaggerUi = require("swagger-ui-express");
 const YAML = require("yamljs");
+const cors = require("cors");
 
 const Image = require("./models/Image");
 const { createDatabase } = require("./db/index");
@@ -26,6 +27,8 @@ async function createApp() {
   await createDatabase();
 
   const app = express();
+
+  app.use(cors());
 
   // api docs endpoint
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
